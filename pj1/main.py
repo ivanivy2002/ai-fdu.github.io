@@ -88,19 +88,40 @@ def data_preprocess(args):
         diagrams = feature_extraction()[0]
     else:
         diagrams = np.load('./data/diagrams.npy')
+    diagrams_row, diagrams_col = diagrams.shape
+    # print("Diagrams shape:", diagrams.shape) # 1357*300 (1357 samples, 300 features)
     cast = pd.read_table('./data/SCOP40mini_sequence_minidatabase_19.cast')  # Load the cast file
+    # print("Cast shape:", cast.shape)  # 1357*56 (1357 samples, 56 tasks)
     cast.columns.values[0] = 'protein'  # Rename the first column to 'protein'
-
     data_list = []
     target_list = []
     for task in range(1, 56):  # Assuming only one task for now
         task_col = cast.iloc[:, task]  # Get the task column
-
         ## todo: Try to load data/target
-
+        # 利用diagrams的特征维度数据，处理得到train_data和test_data
+        # 利用cast的标签数据，处理train_targets和test_targets
+        # train_data, test_data, train_targets, test_targets = train_test_split(diagrams, cast.iloc[:, 1:], test_size=0.2, random_state=42)
+        train_data = []
+        test_data = []
+        train_targets = []
+        test_targets = []
+        for i in range(diagrams_row):
+            if task_col[i] == 1:
+                train_data.append(diagrams[i])
+                train_targets.append(True)
+            elif task_col[i] == 2:
+                train_data.append(diagrams[i])
+                train_targets.append(False)
+            elif task_col[i] == 3:
+                test_data.append(diagrams[i])
+                test_targets.append(True)
+            elif task_col[i] == 4:
+                test_data.append(diagrams[i])
+                test_targets.append(False)
+            else:
+                raise ValueError("Unknown tag")
         data_list.append((train_data, test_data))
         target_list.append((train_targets, test_targets))
-
     return data_list, target_list
 
 
@@ -122,7 +143,7 @@ def main(args):
         else:
             raise ValueError("Unsupported model type")
 
-    for i in range(len(data_list)):
+    for i in range(len(data_list)): # For each task
         train_data, test_data = data_list[i]
         train_targets, test_targets = target_list[i]
 
