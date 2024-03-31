@@ -10,6 +10,9 @@ from fea import feature_extraction
 
 from Bio.PDB import PDBParser
 
+DEBUG = False
+# DEBUG = True
+
 
 class SVMModel:
     def __init__(self, kernel='rbf', C=1.0):
@@ -32,7 +35,7 @@ class LRModel:
     """
 
     def __init__(self, C=1.0):
-        self.model = LogisticRegression(C=C)
+        self.model = LogisticRegression(C=C, max_iter=1000)
 
     """
         Train the Logistic Regression model.
@@ -126,14 +129,18 @@ def data_preprocess(args):
 
 
 def main(args):
+    path = './out/'
+
     data_list, target_list = data_preprocess(args)
 
     task_acc_train = []  # List to store training accuracy for each task
     task_acc_test = []  # List to store testing accuracy for each task
 
     # Model Initialization based on input argument
+    path += f"{args.model_type}_C{args.C}"
     if args.model_type == 'svm':
         model = SVMModel(kernel=args.kernel, C=args.C)
+        path += f"_{args.kernel}"
     else:
         print("Attention: Kernel option is not supported")
         if args.model_type == 'linear_svm':
@@ -142,27 +149,39 @@ def main(args):
             model = LRModel(C=args.C)
         else:
             raise ValueError("Unsupported model type")
+    path += '.txt'
+    with open(path, 'a') as f:
+        start_time = pd.Timestamp.now()
+        for i in range(len(data_list)): # For each task
+            train_data, test_data = data_list[i]
+            train_targets, test_targets = target_list[i]
 
-    for i in range(len(data_list)): # For each task
-        train_data, test_data = data_list[i]
-        train_targets, test_targets = target_list[i]
+            print(f"Processing dataset {i + 1}/{len(data_list)}")
+            f.write(f"Processing dataset {i + 1}/{len(data_list)}\n")
+            # Train the model
+            model.train(train_data, train_targets)
 
-        print(f"Processing dataset {i + 1}/{len(data_list)}")
+            # Evaluate the model
+            train_accuracy = model.evaluate(train_data, train_targets)
+            test_accuracy = model.evaluate(test_data, test_targets)
 
-        # Train the model
-        model.train(train_data, train_targets)
-
-        # Evaluate the model
-        train_accuracy = model.evaluate(train_data, train_targets)
-        test_accuracy = model.evaluate(test_data, test_targets)
-
-        print(f"Dataset {i + 1}/{len(data_list)} - Train Accuracy: {train_accuracy}, Test Accuracy: {test_accuracy}")
-
-        task_acc_train.append(train_accuracy)
-        task_acc_test.append(test_accuracy)
-
-    print("Training accuracy:", sum(task_acc_train) / len(task_acc_train))
-    print("Testing accuracy:", sum(task_acc_test) / len(task_acc_test))
+            print(f"Dataset {i + 1}/{len(data_list)} - Train Accuracy: {train_accuracy}, Test Accuracy: {test_accuracy}")
+            f.write(f"Dataset {i + 1}/{len(data_list)} - Train Accuracy: {train_accuracy}, Test Accuracy: {test_accuracy}\n")
+            task_acc_train.append(train_accuracy)
+            task_acc_test.append(test_accuracy)
+        end_time = pd.Timestamp.now()
+        cost_time = end_time - start_time
+        print(args.__str__() + '\n')
+        f.write(args.__str__() + '\n')
+        print("Training accuracy:", sum(task_acc_train) / len(task_acc_train))
+        print("Testing accuracy:", sum(task_acc_test) / len(task_acc_test))
+        f.write(f"Training accuracy: {sum(task_acc_train) / len(task_acc_train)}\n")
+        f.write(f"Testing accuracy: {sum(task_acc_test) / len(task_acc_test)}\n")
+        print("Time taken:", cost_time)
+        f.write(f"Time taken: {cost_time}\n")
+        print("--------------------------------------------------")
+        f.write("--------------------------------------------------\n")
+    return task_acc_train, task_acc_test, cost_time
 
 
 if __name__ == "__main__":

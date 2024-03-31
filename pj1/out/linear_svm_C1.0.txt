@@ -1,0 +1,6 @@
+Processing dataset 1/55
+Dataset 1/55 - Train Accuracy: 0.962043795620438, Test Accuracy: 0.9077380952380952
+Processing dataset 2/55
+Dataset 2/55 - Train Accuracy: 0.9955817378497791, Test Accuracy: 0.9218289085545722
+Processing dataset 3/55
+--------------------------------------------------
