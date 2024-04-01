@@ -10,8 +10,8 @@ from fea import feature_extraction
 
 from Bio.PDB import PDBParser
 
-DEBUG = False
-# DEBUG = True
+TASK_DETAIL = False
+# TASK_DETAIL = True
 
 
 class SVMModel:
@@ -88,7 +88,9 @@ class LinearSVMModel:
 
 def data_preprocess(args):
     if args.ent:
-        diagrams = feature_extraction()[0]
+        # diagrams = feature_extraction()[0]
+        # 直接加载fea后的数据
+        diagrams = np.load('./data/atom_matrix.npy')
     else:
         diagrams = np.load('./data/diagrams.npy')
     diagrams_row, diagrams_col = diagrams.shape
@@ -137,6 +139,7 @@ def main(args):
     task_acc_test = []  # List to store testing accuracy for each task
 
     # Model Initialization based on input argument
+    path += f"{args.model_type}/"
     path += f"{args.model_type}_C{args.C}"
     if args.model_type == 'svm':
         model = SVMModel(kernel=args.kernel, C=args.C)
@@ -155,8 +158,8 @@ def main(args):
         for i in range(len(data_list)): # For each task
             train_data, test_data = data_list[i]
             train_targets, test_targets = target_list[i]
-
-            print(f"Processing dataset {i + 1}/{len(data_list)}")
+            if TASK_DETAIL:
+                print(f"Processing dataset {i + 1}/{len(data_list)}")
             f.write(f"Processing dataset {i + 1}/{len(data_list)}\n")
             # Train the model
             model.train(train_data, train_targets)
@@ -164,24 +167,26 @@ def main(args):
             # Evaluate the model
             train_accuracy = model.evaluate(train_data, train_targets)
             test_accuracy = model.evaluate(test_data, test_targets)
-
-            print(f"Dataset {i + 1}/{len(data_list)} - Train Accuracy: {train_accuracy}, Test Accuracy: {test_accuracy}")
+            if TASK_DETAIL:
+                print(f"Dataset {i + 1}/{len(data_list)} - Train Accuracy: {train_accuracy}, Test Accuracy: {test_accuracy}")
             f.write(f"Dataset {i + 1}/{len(data_list)} - Train Accuracy: {train_accuracy}, Test Accuracy: {test_accuracy}\n")
             task_acc_train.append(train_accuracy)
             task_acc_test.append(test_accuracy)
         end_time = pd.Timestamp.now()
         cost_time = end_time - start_time
-        print(args.__str__() + '\n')
         f.write(args.__str__() + '\n')
-        print("Training accuracy:", sum(task_acc_train) / len(task_acc_train))
-        print("Testing accuracy:", sum(task_acc_test) / len(task_acc_test))
-        f.write(f"Training accuracy: {sum(task_acc_train) / len(task_acc_train)}\n")
-        f.write(f"Testing accuracy: {sum(task_acc_test) / len(task_acc_test)}\n")
-        print("Time taken:", cost_time)
+        task_acc_train_avg = sum(task_acc_train) / len(task_acc_train)
+        task_acc_test_avg = sum(task_acc_test) / len(task_acc_test)
+        f.write(f"Training accuracy: {task_acc_train_avg}\n")
+        f.write(f"Testing accuracy: {task_acc_test_avg}\n")
         f.write(f"Time taken: {cost_time}\n")
-        print("--------------------------------------------------")
         f.write("--------------------------------------------------\n")
-    return task_acc_train, task_acc_test, cost_time
+        print(args.__str__() + '\n')
+        print("Training accuracy:", task_acc_train_avg)
+        print("Testing accuracy:", task_acc_test_avg)
+        print("Time taken:", cost_time)
+        print("--------------------------------------------------")
+    return task_acc_train_avg, task_acc_test_avg, cost_time
 
 
 if __name__ == "__main__":

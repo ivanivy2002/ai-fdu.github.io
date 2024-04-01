@@ -1,8 +1,117 @@
+from types import SimpleNamespace
 import main as m
+import matplotlib.pyplot as plt
+
+def time_to_seconds(time_str):
+    # 截取最后的时间部分并以":"拆分
+    time_components = time_str.strip().split()[-1].split(':')
+    # 将小时、分钟和秒转换为秒数并相加
+    total_seconds = int(time_components[0]) * 3600 + int(time_components[1]) * 60 + float(time_components[2])
+    return total_seconds
+
+def test_C(m_t='svm', k='rbf', e=False):
+    acc_train_list = []
+    acc_test_list = []
+    cost_time_list = []
+    path = './out/'
+    path += f"{m_t}_{k}_e{e}_CMeasure.txt"
+    with open(path, 'a') as f:
+        for exp in range(-15, 25):
+            C = 10**(0.1*exp)
+            args = SimpleNamespace(model_type=m_t, kernel=k, C=C, ent=e)
+            print(args)
+            acc_train, acc_test, cost_time = m.main(args)
+            acc_train_list.append(acc_train)
+            acc_test_list.append(acc_test)
+            cost_time_list.append(cost_time)
+            f.write(f"C={C}, Train Accuracy: {acc_train}, Test Accuracy: {acc_test}, Cost Time: {cost_time}\n")
+    return acc_train_list, acc_test_list, cost_time_list
 
 
-def test_main():
-    for C in [0.1, 1, 10]:
-        args = m.parser.parse_args(['--model_type', 'svm', '--kernel', 'rbf', '--C', str(C)])
-        print(args)
-        acc_train, acc_test, cost_time = m.main(m.args)
+def draw_C(m_t='svm', k='rbf', e=False):
+    acc_train_list, acc_test_list, cost_time_list = test_C(m_t, k, e)
+    C = [10**(0.1*exp) for exp in range(-15, 25)]
+
+    path = f'./fig/{m_t}_{k}_e{e}_CMeasure_'
+    plt.plot(C, acc_train_list, marker='o', label='Train Accuracy')
+    plt.xlabel('C')
+    plt.ylabel('Accuracy')
+    plt.title('Train Accuracy vs. C')
+    plt.legend()
+    plt.grid(True)
+    plt.savefig(f'{path}train.png')
+    plt.show()
+    
+    plt.plot(C, acc_test_list, marker='o', label='Test Accuracy')
+    plt.xlabel('C')
+    plt.ylabel('Accuracy')
+    plt.title('Test Accuracy vs. C')
+    plt.legend()
+    plt.grid(True)
+    plt.savefig(f'{path}test.png')
+    plt.show()
+    
+    plt.plot(C, cost_time_list, marker='o', color='red', label='Time (s)')
+    plt.xlabel('C')
+    plt.ylabel('Time (s)')
+    plt.title('Time vs. C')
+    plt.legend()
+    plt.grid(True)
+    plt.savefig(f'{path}time.png')
+    plt.show()
+    
+    return C, acc_train_list, acc_test_list, cost_time_list
+
+def draw_by_data_txt():
+    # 读取处理后的数据
+    with open('ProcessedData.txt', 'r') as file:
+        lines = file.readlines()
+
+    # 初始化列表以存储C值、训练准确率、测试准确率和时间
+    C_values = []
+    train_accuracy = []
+    test_accuracy = []
+    time_seconds = []
+
+    # 解析每一行数据
+    for line in lines:
+        components = line.strip().split(', ')
+        C_values.append(float(components[0].split('=')[1]))
+        train_accuracy.append(float(components[1].split(': ')[1]))
+        test_accuracy.append(float(components[2].split(': ')[1]))
+        time_seconds.append(float(components[3].split(': ')[1]))
+    
+    # 画一个测试准确率的图
+    plt.plot(C_values, test_accuracy, marker='o', label='Test Accuracy')
+    plt.xlabel('C')
+    plt.ylabel('Accuracy')
+    plt.title('Test Accuracy vs. C')
+    plt.legend()
+    plt.grid(True)
+    plt.savefig('./fig/test_acc_C.png')
+    plt.show()
+
+    
+    # 画一个训练准确率的图
+    plt.plot(C_values, train_accuracy, marker='o', label='Train Accuracy')
+    plt.xlabel('C')
+    plt.ylabel('Accuracy')
+    plt.title('Train Accuracy vs. C')
+    plt.legend()
+    plt.grid(True)
+    plt.savefig('./fig/train_acc_C.png')
+    plt.show()
+    
+    # 运行时间
+    plt.plot(C_values, time_seconds, color='red', marker='o', label='Time (s)')
+    plt.xlabel('C')
+    plt.ylabel('Time (s)')
+    plt.title('Time vs. C')
+    plt.legend()
+    plt.grid(True)
+    plt.savefig('./fig/time_C.png')
+    plt.show()
+
+
+if __name__ == '__main__':
+    draw_C('svm', 'rbf', True)

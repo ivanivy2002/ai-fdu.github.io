@@ -1,0 +1,25 @@
+namespace(model_type='svm', kernel='rbf', C=0.01, ent=False)
+namespace(model_type='svm', kernel='rbf', C=0.01, ent=False)
+
+Training accuracy: 0.9020407353444687
+Testing accuracy: 0.9784509546502104
+Time taken: 0 days 00:00:04.781959
+--------------------------------------------------
+4.781959
+namespace(model_type='svm', kernel='poly', C=0.01, ent=False)
+namespace(model_type='svm', kernel='poly', C=0.01, ent=False)
+
+Training accuracy: 0.9020407353444687
+Testing accuracy: 0.9784509546502104
+Time taken: 0 days 00:00:03.682923
+--------------------------------------------------
+3.682923
+namespace(model_type='svm', kernel='sigmoid', C=0.01, ent=False)
+namespace(model_type='svm', kernel='sigmoid', C=0.01, ent=False)
+
+Training accuracy: 0.9020407353444687
+Testing accuracy: 0.9784509546502104
+Time taken: 0 days 00:00:03.984288
+--------------------------------------------------
+3.984288
+namespace(model_type='svm', kernel='linear', C=0.01, ent=False)
