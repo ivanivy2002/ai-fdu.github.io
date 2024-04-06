@@ -5,6 +5,7 @@ import pandas as pd
 
 from sklearn.preprocessing import label_binarize
 from sklearn.svm import SVC
+from sklearn.svm import LinearSVC
 from sklearn.linear_model import LogisticRegression
 from fea import feature_extraction
 
@@ -73,7 +74,7 @@ class LinearSVMModel:
     """
 
     def __init__(self, C=1.0):
-        self.model = SVC(kernel='linear', C=C, probability=True)
+        self.model = LinearSVC(C=C, max_iter=1000)
 
     """
         Train and Evaluate are the same.
@@ -86,11 +87,49 @@ class LinearSVMModel:
         return self.model.score(data, targets)
 
 
+class LinearSVMModel_Hand:
+    # 手写的线性SVM
+    def __init__(self, C=1.0):
+        self.C = C
+        self.model = None
+        
+    def train(self, train_data, train_targets):
+        self.model = self.fit(train_data, train_targets)
+        
+    def fit(self, X, y):
+        n_samples, n_features = X.shape
+        alpha = np.zeros(n_samples)
+        beta = 0
+        lr = 0.0001
+        max_iter = 1000
+        for _ in range(max_iter):
+            for i in range(n_samples):
+                if y[i] * (np.dot(X[i], X.T.dot(alpha * y)) + beta) <= 0:
+                    alpha[i] += lr
+                    beta += lr * y[i]
+        return alpha, beta
+    
+    def predict(self, X):
+        return np.sign(np.dot(X, X.T.dot(self.model[0] * y)) + self.model[1])
+    
+    def score(self, X, y):
+        return np.mean(self.predict(X) == y)
+    
+    def evaluate(self, data, targets):
+        return self.score(data, targets)
+    
+
 def data_preprocess(args):
-    if args.ent:
+    if args.ent == 'Atom':
         # diagrams = feature_extraction()[0]
-        # 直接加载fea后的数据
         diagrams = np.load('./data/atom_matrix.npy')
+    elif args.ent == 'Residue':
+        # diagrams = residue_extraction()[0]
+        diagrams = np.load('./data/residue_matrix.npy')
+    elif args.ent == 'Chain':
+        # diagrams = chain_extraction()[0]
+        # 直接加载fea后的数据
+        diagrams = np.load('./data/chain_matrix.npy')
     else:
         diagrams = np.load('./data/diagrams.npy')
     diagrams_row, diagrams_col = diagrams.shape
@@ -195,7 +234,9 @@ if __name__ == "__main__":
     parser.add_argument('--kernel', type=str, default='rbf', choices=['linear', 'poly', 'rbf', 'sigmoid'],
                         help="Kernel type")
     parser.add_argument('--C', type=float, default=20, help="Regularization parameter")
-    parser.add_argument('--ent', action='store_true',
+    # parser.add_argument('--ent', action='store_true',
+    #                     help="Load data from a file using a feature engineering function feature_extraction() from fea.py")
+    parser.add_argument('--ent', type=str, default='false', choices=['Atom','Residue','Chain','False'],
                         help="Load data from a file using a feature engineering function feature_extraction() from fea.py")
     args = parser.parse_args()
     main(args)

@@ -11,15 +11,17 @@ def time_to_seconds(time_str):
     total_seconds = int(time_components[0]) * 3600 + int(time_components[1]) * 60 + float(time_components[2])
     return total_seconds
 
-def test_C(m_t='svm', k='rbf', e=False):
+
+def test_C(m_t='svm', k='rbf', e='False'):
     acc_train_list = []
     acc_test_list = []
     cost_time_list = []
+    time_seconds = []
     path = './out/'
     path += f"{m_t}_{k}_e{e}_CMeasure.txt"
     with open(path, 'a') as f:
         for exp in range(-15, 25):
-            C = 10**(0.1*exp)
+            C = 10 ** (0.1 * exp)
             args = SimpleNamespace(model_type=m_t, kernel=k, C=C, ent=e)
             print(args)
             acc_train, acc_test, cost_time = m.main(args)
@@ -27,14 +29,21 @@ def test_C(m_t='svm', k='rbf', e=False):
             acc_test_list.append(acc_test)
             cost_time_list.append(cost_time)
             f.write(f"C={C}, Train Accuracy: {acc_train}, Test Accuracy: {acc_test}, Cost Time: {cost_time}\n")
-    return acc_train_list, acc_test_list, cost_time_list
+            # 将 cost_time 转换为str
+            # 移除时间字符串中的 'days'，只保留时间部分
+            time_str = str(cost_time).split(' ')[-1]
+            # 将时间字符串解析为时间间隔对象
+            time_delta = datetime.strptime(time_str, '%H:%M:%S.%f') - datetime.strptime('0:00:00.000000', '%H:%M:%S.%f')
+            # 将时间间隔对象转换为秒数
+            time_seconds.append(time_delta.total_seconds())
+    return acc_train_list, acc_test_list, cost_time_list, time_seconds
 
 
-def draw_C(m_t='svm', k='rbf', e=False):
-    acc_train_list, acc_test_list, cost_time_list = test_C(m_t, k, e)
+def draw_C(m_t='svm', k='rbf', e='False'):
+    acc_train_list, acc_test_list, cost_time_list, time_seconds = test_C(m_t, k, e)
     # 处理时间格式
-    cost_time_list = [time_to_seconds(time) for time in cost_time_list]
-    C = [10**(0.1*exp) for exp in range(-15, 25)]
+    # cost_time_list = [time_to_seconds(time) for time in cost_time_list]
+    C = [10 ** (0.1 * exp) for exp in range(-15, 25)]
 
     path = f'./fig/{m_t}_{k}_e{e}_CMeasure_'
     plt.plot(C, acc_train_list, marker='o', label='Train Accuracy')
@@ -45,7 +54,7 @@ def draw_C(m_t='svm', k='rbf', e=False):
     plt.grid(True)
     plt.savefig(f'{path}train.png')
     plt.show()
-    
+
     plt.plot(C, acc_test_list, marker='o', label='Test Accuracy')
     plt.xlabel('C')
     plt.ylabel('Accuracy')
@@ -54,8 +63,8 @@ def draw_C(m_t='svm', k='rbf', e=False):
     plt.grid(True)
     plt.savefig(f'{path}test.png')
     plt.show()
-    
-    plt.plot(C, cost_time_list, marker='o', color='red', label='Time (s)')
+
+    plt.plot(C, time_seconds, marker='o', color='red', label='Time (s)')
     plt.xlabel('C')
     plt.ylabel('Time (s)')
     plt.title('Time vs. C')
@@ -63,10 +72,11 @@ def draw_C(m_t='svm', k='rbf', e=False):
     plt.grid(True)
     plt.savefig(f'{path}time.png')
     plt.show()
-    
+
     return C, acc_train_list, acc_test_list, cost_time_list
 
-def draw_by_data_txt(m_t='svm', k='rbf', e=False):
+
+def draw_by_data_txt(m_t='svm', k='rbf', e='False'):
     # 读取处理后的数据
     path = './out/'
     path += f"{m_t}_{k}_e{e}_CMeasure.txt"
@@ -75,7 +85,7 @@ def draw_by_data_txt(m_t='svm', k='rbf', e=False):
 
     # 初始化列表以存储C值、训练准确率、测试准确率和时间
     # C = [10**(0.1*exp) for exp in range(-15, 25)]
-    C = list(range(-15, 25))   # C 只是从 -15 到 25, 不指数
+    C = list(range(-15, 25))  # C 只是从 -15 到 25, 不指数
     C_values = []
     train_accuracy = []
     test_accuracy = []
@@ -95,7 +105,7 @@ def draw_by_data_txt(m_t='svm', k='rbf', e=False):
         time_delta = datetime.strptime(time_str, '%H:%M:%S.%f') - datetime.strptime('0:00:00.000000', '%H:%M:%S.%f')
         # 将时间间隔对象转换为秒数
         time_seconds.append(time_delta.total_seconds())
-        
+
     fig_path = f'./fig/{m_t}_{k}_e{e}_CMeasure_'
     # time_seconds = [time_to_seconds(time) for time in time_seconds]
     C_values = C
@@ -108,10 +118,9 @@ def draw_by_data_txt(m_t='svm', k='rbf', e=False):
     plt.title(f'Test Accuracy vs. {xl}')
     plt.legend()
     plt.grid(True)
-    plt.savefig(f'{fig_path}test.png')
+    plt.savefig(f'{fig_path}test_lgC.png')
     plt.show()
 
-    
     # 画一个训练准确率的图
     plt.plot(C_values, train_accuracy, marker='o', label='Train Accuracy')
     plt.xlabel(xl)
@@ -119,9 +128,9 @@ def draw_by_data_txt(m_t='svm', k='rbf', e=False):
     plt.title(f'Train Accuracy vs. {xl}')
     plt.legend()
     plt.grid(True)
-    plt.savefig(f'{fig_path}train.png')
+    plt.savefig(f'{fig_path}train_lgC.png')
     plt.show()
-    
+
     # 运行时间
     plt.plot(C_values, time_seconds, color='red', marker='o', label='Time (s)')
     plt.xlabel(xl)
@@ -129,10 +138,14 @@ def draw_by_data_txt(m_t='svm', k='rbf', e=False):
     plt.title(f'Time vs. {xl}')
     plt.legend()
     plt.grid(True)
-    plt.savefig(f'{fig_path}time.png')
+    plt.savefig(f'{fig_path}time_lgC.png')
     plt.show()
 
 
 if __name__ == '__main__':
-    # draw_C('svm', 'rbf', True)
-    draw_by_data_txt('svm', 'rbf', True)
+    # draw_C('svm', 'rbf', 'Residue')
+    # draw_by_data_txt('svm', 'rbf', 'Residue')
+    # draw_C('svm', 'rbf', 'Chain')
+    # draw_by_data_txt('svm', 'rbf', 'Chain')
+    # draw_C('linear_svm', 'rbf' , 'Chain')
+    draw_C('lr', 'rbf' , 'Chain')
