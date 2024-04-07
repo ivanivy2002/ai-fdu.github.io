@@ -17,7 +17,8 @@ def test_K(m_t='svm', C=0.01, e=False):
     acc_train_list = []
     acc_test_list = []
     cost_time_list = []
-    Ks = ['rbf', 'poly', 'sigmoid'] # 'linear' is not supported
+    # Ks = ['rbf', 'poly', 'sigmoid'] # 'linear' is not supported
+    Ks = ['rbf', 'poly', 'sigmoid', 'linear'] # is not supported
     path = './out/'
     path += f"{m_t}_C{C}_KMeasure.txt"
     with open(path, 'a') as f:
@@ -34,14 +35,14 @@ def test_K(m_t='svm', C=0.01, e=False):
     return Ks, acc_train_list, acc_test_list, cost_time_list
 
 
-def draw_K(m_t='svm', C=0.01, e=False):
+def draw_K(m_t='svm', C=0.01, e='False'):
     Ks, acc_train_list, acc_test_list, cost_time_list = test_K(m_t, C, e)
     # Ks = ['rbf', 'poly', 'sigmoid', 'linear']
     # acc_train_list = [0.9020407353444687, 0.9020407353444687, 0.9020407353444687, 0.9020407353444687]
     # acc_test_list = [0.9784509546502104, 0.9784509546502104, 0.9784509546502104, 0.9784509546502104]
     # cost_time_list = [4.781959, 3.682923, 3.984288, math.inf]
     # 分开画
-    path = f'./fig/{m_t}_C{C}_KMeasure_'
+    path = f'./fig/{m_t}_C{C}_e{e}_KMeasure_'
     plt.plot(Ks, acc_train_list, label='Train Accuracy', marker='o')
     plt.xlabel('Kernels')
     plt.ylabel('Accuracy')
@@ -65,5 +66,5 @@ def draw_K(m_t='svm', C=0.01, e=False):
 
 
 if __name__ == '__main__':
-    draw_K('svm', 100, False)
+    draw_K('svm', 0.01, 'Chain')
     # test_K()
