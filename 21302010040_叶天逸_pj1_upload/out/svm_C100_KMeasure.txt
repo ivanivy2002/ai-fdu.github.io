@@ -1,0 +1,9 @@
+K=rbf, Train Accuracy: 0.9024956269160543, Test Accuracy: 0.977878410857341, Cost Time: 13.896201
+K=poly, Train Accuracy: 0.903204891792666, Test Accuracy: 0.9762634703496185, Cost Time: 24.219386
+K=sigmoid, Train Accuracy: 0.843440468605663, Test Accuracy: 0.9023413259475234, Cost Time: 3.432312
+K=rbf, Train Accuracy: 0.9024956269160543, Test Accuracy: 0.977878410857341, Cost Time: 13.687974
+K=poly, Train Accuracy: 0.903204891792666, Test Accuracy: 0.9762634703496185, Cost Time: 24.093303
+K=sigmoid, Train Accuracy: 0.843440468605663, Test Accuracy: 0.9023413259475234, Cost Time: 3.5689
+K=rbf, Train Accuracy: 0.9024956269160543, Test Accuracy: 0.977878410857341, Cost Time: 13.783668
+K=poly, Train Accuracy: 0.903204891792666, Test Accuracy: 0.9762634703496185, Cost Time: 24.515282
+K=sigmoid, Train Accuracy: 0.843440468605663, Test Accuracy: 0.9023413259475234, Cost Time: 3.414934

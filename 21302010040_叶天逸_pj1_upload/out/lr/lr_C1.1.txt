@@ -1,0 +1,114 @@
+Processing dataset 1/55
+Dataset 1/55 - Train Accuracy: 0.9766423357664233, Test Accuracy: 0.9672619047619048
+Processing dataset 2/55
+Dataset 2/55 - Train Accuracy: 0.9764359351988218, Test Accuracy: 0.9616519174041298
+Processing dataset 3/55
+Dataset 3/55 - Train Accuracy: 0.9481268011527377, Test Accuracy: 0.9743589743589743
+Processing dataset 4/55
+Dataset 4/55 - Train Accuracy: 0.9734904270986745, Test Accuracy: 0.9454277286135693
+Processing dataset 5/55
+Dataset 5/55 - Train Accuracy: 0.9536903039073806, Test Accuracy: 0.9654654654654654
+Processing dataset 6/55
+Dataset 6/55 - Train Accuracy: 0.9441260744985673, Test Accuracy: 0.9711684370257967
+Processing dataset 7/55
+Dataset 7/55 - Train Accuracy: 0.952449567723343, Test Accuracy: 0.971342383107089
+Processing dataset 8/55
+Dataset 8/55 - Train Accuracy: 0.8805555555555555, Test Accuracy: 0.9654631083202512
+Processing dataset 9/55
+Dataset 9/55 - Train Accuracy: 0.8671328671328671, Test Accuracy: 0.940809968847352
+Processing dataset 10/55
+Dataset 10/55 - Train Accuracy: 0.8442622950819673, Test Accuracy: 0.9584
+Processing dataset 11/55
+Dataset 11/55 - Train Accuracy: 0.9026162790697675, Test Accuracy: 0.9133034379671151
+Processing dataset 12/55
+Dataset 12/55 - Train Accuracy: 0.9635568513119533, Test Accuracy: 0.9538002980625931
+Processing dataset 13/55
+Dataset 13/55 - Train Accuracy: 0.9512195121951219, Test Accuracy: 0.9803030303030303
+Processing dataset 14/55
+Dataset 14/55 - Train Accuracy: 0.9483500717360115, Test Accuracy: 0.9712121212121212
+Processing dataset 15/55
+Dataset 15/55 - Train Accuracy: 0.9439655172413793, Test Accuracy: 0.9591527987897126
+Processing dataset 16/55
+Dataset 16/55 - Train Accuracy: 0.9568345323741008, Test Accuracy: 0.9712990936555891
+Processing dataset 17/55
+Dataset 17/55 - Train Accuracy: 0.9321789321789322, Test Accuracy: 0.9487951807228916
+Processing dataset 18/55
+Dataset 18/55 - Train Accuracy: 0.9138418079096046, Test Accuracy: 0.9676425269645609
+Processing dataset 19/55
+Dataset 19/55 - Train Accuracy: 0.9390420899854862, Test Accuracy: 0.9401197604790419
+Processing dataset 20/55
+Dataset 20/55 - Train Accuracy: 0.9209039548022598, Test Accuracy: 0.9676425269645609
+Processing dataset 21/55
+Dataset 21/55 - Train Accuracy: 0.9737991266375546, Test Accuracy: 0.9656716417910448
+Processing dataset 22/55
+Dataset 22/55 - Train Accuracy: 0.9594202898550724, Test Accuracy: 0.9580209895052474
+Processing dataset 23/55
+Dataset 23/55 - Train Accuracy: 0.9792284866468842, Test Accuracy: 0.9546120058565154
+Processing dataset 24/55
+Dataset 24/55 - Train Accuracy: 0.9291907514450867, Test Accuracy: 0.9488721804511279
+Processing dataset 25/55
+Dataset 25/55 - Train Accuracy: 0.9119318181818182, Test Accuracy: 0.9601837672281777
+Processing dataset 26/55
+Dataset 26/55 - Train Accuracy: 0.9970588235294118, Test Accuracy: 0.9778434268833087
+Processing dataset 27/55
+Dataset 27/55 - Train Accuracy: 0.867043847241867, Test Accuracy: 0.9123076923076923
+Processing dataset 28/55
+Dataset 28/55 - Train Accuracy: 0.8365384615384616, Test Accuracy: 0.9411764705882353
+Processing dataset 29/55
+Dataset 29/55 - Train Accuracy: 0.8145161290322581, Test Accuracy: 0.9510603588907015
+Processing dataset 30/55
+Dataset 30/55 - Train Accuracy: 0.8178137651821862, Test Accuracy: 0.9512987012987013
+Processing dataset 31/55
+Dataset 31/55 - Train Accuracy: 0.8252032520325203, Test Accuracy: 0.9531502423263328
+Processing dataset 32/55
+Dataset 32/55 - Train Accuracy: 0.8306233062330624, Test Accuracy: 0.9402261712439418
+Processing dataset 33/55
+Dataset 33/55 - Train Accuracy: 0.9824304538799414, Test Accuracy: 0.9673590504451038
+Processing dataset 34/55
+Dataset 34/55 - Train Accuracy: 0.9955817378497791, Test Accuracy: 0.9793510324483776
+Processing dataset 35/55
+Dataset 35/55 - Train Accuracy: 0.9400855920114123, Test Accuracy: 0.9801829268292683
+Processing dataset 36/55
+Dataset 36/55 - Train Accuracy: 0.9792592592592593, Test Accuracy: 0.9354838709677419
+Processing dataset 37/55
+Dataset 37/55 - Train Accuracy: 0.8034528552456839, Test Accuracy: 0.9039735099337748
+Processing dataset 38/55
+Dataset 38/55 - Train Accuracy: 0.8135818908122503, Test Accuracy: 0.9075907590759076
+Processing dataset 39/55
+Dataset 39/55 - Train Accuracy: 0.8055925432756325, Test Accuracy: 0.929042904290429
+Processing dataset 40/55
+Dataset 40/55 - Train Accuracy: 0.8139223560910308, Test Accuracy: 0.9278688524590164
+Processing dataset 41/55
+Dataset 41/55 - Train Accuracy: 0.8102288021534321, Test Accuracy: 0.9381107491856677
+Processing dataset 42/55
+Dataset 42/55 - Train Accuracy: 0.7981530343007915, Test Accuracy: 0.9348914858096828
+Processing dataset 43/55
+Dataset 43/55 - Train Accuracy: 0.7947368421052632, Test Accuracy: 0.9128978224455612
+Processing dataset 44/55
+Dataset 44/55 - Train Accuracy: 0.8215258855585831, Test Accuracy: 0.9149277688603531
+Processing dataset 45/55
+Dataset 45/55 - Train Accuracy: 0.8007915567282322, Test Accuracy: 0.9198664440734557
+Processing dataset 46/55
+Dataset 46/55 - Train Accuracy: 0.9296987087517934, Test Accuracy: 0.9606060606060606
+Processing dataset 47/55
+Dataset 47/55 - Train Accuracy: 0.9384835479256081, Test Accuracy: 0.958966565349544
+Processing dataset 48/55
+Dataset 48/55 - Train Accuracy: 0.9193776520509194, Test Accuracy: 0.9676923076923077
+Processing dataset 49/55
+Dataset 49/55 - Train Accuracy: 0.9296987087517934, Test Accuracy: 0.9454545454545454
+Processing dataset 50/55
+Dataset 50/55 - Train Accuracy: 0.9824046920821115, Test Accuracy: 0.9674074074074074
+Processing dataset 51/55
+Dataset 51/55 - Train Accuracy: 0.9591836734693877, Test Accuracy: 0.9672131147540983
+Processing dataset 52/55
+Dataset 52/55 - Train Accuracy: 0.9563953488372093, Test Accuracy: 0.9626307922272048
+Processing dataset 53/55
+Dataset 53/55 - Train Accuracy: 0.986784140969163, Test Accuracy: 0.9630177514792899
+Processing dataset 54/55
+Dataset 54/55 - Train Accuracy: 0.9955882352941177, Test Accuracy: 0.9630723781388478
+Processing dataset 55/55
+Dataset 55/55 - Train Accuracy: 0.9897510980966325, Test Accuracy: 0.973293768545994
+Namespace(C=1.1, ent=False, kernel='rbf', model_type='lr')
+Training accuracy: 0.9123363342723121
+Testing accuracy: 0.9525444759977528
+--------------------------------------------------

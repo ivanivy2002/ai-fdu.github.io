@@ -1,0 +1,28 @@
+namespace(model_type='svm', kernel='rbf', C=0.01, ent=False)
+namespace(model_type='svm', kernel='rbf', C=0.01, ent=False)
+
+Training accuracy: 0.9020407353444687
+Testing accuracy: 0.9784509546502104
+Time taken: 0 days 00:00:04.781959
+--------------------------------------------------
+4.781959
+namespace(model_type='svm', kernel='poly', C=0.01, ent=False)
+namespace(model_type='svm', kernel='poly', C=0.01, ent=False)
+
+Training accuracy: 0.9020407353444687
+Testing accuracy: 0.9784509546502104
+Time taken: 0 days 00:00:03.682923
+--------------------------------------------------
+3.682923
+namespace(model_type='svm', kernel='sigmoid', C=0.01, ent=False)
+namespace(model_type='svm', kernel='sigmoid', C=0.01, ent=False)
+
+Training accuracy: 0.9020407353444687
+Testing accuracy: 0.9784509546502104
+Time taken: 0 days 00:00:03.984288
+--------------------------------------------------
+3.984288
+namespace(model_type='svm', kernel='linear', C=0.01, ent=False)K=rbf, Train Accuracy: 0.9020407353444687, Test Accuracy: 0.9784509546502104, Cost Time: 1.884226
+K=poly, Train Accuracy: 0.9020407353444687, Test Accuracy: 0.9784509546502104, Cost Time: 1.442958
+K=sigmoid, Train Accuracy: 0.901943764095959, Test Accuracy: 0.9777916677900295, Cost Time: 1.425729
+K=linear, Train Accuracy: 0.9020407353444687, Test Accuracy: 0.9784509546502104, Cost Time: 1.054995
