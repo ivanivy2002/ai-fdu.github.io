@@ -11,3 +11,6 @@
 *.tar.gz
 *.ent
 *.cast
+*.zip
+*.tar
+*.pth
